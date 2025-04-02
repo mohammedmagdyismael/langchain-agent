@@ -22,12 +22,19 @@ export class ChatHandler implements Chat {
     });
     this.langsmithClient = new Client();
   
-    this.pipeline = traceable(async (user_input: { input: string }) => {
+    this.pipeline = traceable(
+      async (user_input: { input: string },
+      ) => {
       const result = await this.client.chat.completions.create({
         messages: [...this.history, { role: "user", content: user_input.input }],
         model: "gpt-3.5-turbo",
       });
       return result.choices[0].message?.content || "No response";
+    },
+    {
+      project_name: process.env.LANGSMITH_PROJECT,
+      metadata: { session_id: this.threadId },
+      name: "Chat Bot",
     });
   }
 
