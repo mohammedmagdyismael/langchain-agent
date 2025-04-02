@@ -21,7 +21,6 @@ AWS.config.update({
 });
 
 const s3 = new AWS.S3();
-const chatHandler = new ChatHandler();
 
 const getChatHistoryHandler = async (key: string, res: Response) => {
     const params = {
@@ -78,6 +77,7 @@ export const getChatHistory = async (req: Request, res: Response) => {
 export const postOngoingAgent = async (req: Request, res: Response) => {
     const { key, content= '' } = req.body;
 
+    const chatHandler = new ChatHandler(key);
     const chatHistory: ChatMessage[] = [];
     const historyResponse: ChatMessage[] = await getChatHistoryHandler(key, res);
 

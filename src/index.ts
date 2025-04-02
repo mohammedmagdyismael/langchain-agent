@@ -4,7 +4,7 @@ import { ChatHandler } from "./Core/ChatHandler";
 import * as readline from "readline";
 
 const run = async () => {
-  const chatHandler = new ChatHandler();
+  const chatHandler = new ChatHandler('');
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
