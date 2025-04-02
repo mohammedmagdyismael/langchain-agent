@@ -3,15 +3,13 @@ require('dotenv').config();
 import { OpenAI } from "openai";
 import { traceable } from "langsmith/traceable";
 import { wrapOpenAI } from "langsmith/wrappers";
-
-interface Chat {
-  sendMessage(input: string): Promise<string>;
-}
+import { ChatMessage } from "../Models/ChatModel";
+import { Chat } from "./Interfaces/IChatHandler";
 
 export class ChatHandler implements Chat {
   private client: OpenAI;
   private pipeline: (user_input: { input: string }) => Promise<string>;
-  private history: { role: "system" | "user" | "assistant"; content: string }[] = [];
+  private history: ChatMessage[] = [];
 
   constructor() {
     this.client = wrapOpenAI(new OpenAI({ apiKey: process.env.OPENAI_API_KEY }));
@@ -25,7 +23,7 @@ export class ChatHandler implements Chat {
     });
   }
 
-  setHistoryArray (history: { role: "system" | "user" | "assistant"; content: string }[]) {
+  setHistoryArray (history: ChatMessage[]) {
     this.history = history;
   }
 
@@ -42,7 +40,7 @@ export class ChatHandler implements Chat {
     }
   }
 
-    getHistory() {
-        return this.history;
-    }
+  getHistory() {
+    return this.history;
+  }
 }

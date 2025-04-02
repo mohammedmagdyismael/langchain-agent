@@ -19,7 +19,6 @@ const run = async () => {
         rl.close();
         return;
       }
-
       try {
         const response = await chatHandler.sendMessage(input);
         console.log(`AI: ${response}`);
