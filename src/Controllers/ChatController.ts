@@ -41,10 +41,6 @@ const getChatHistoryHandler = async (key: string, res: Response) => {
 export const getChatHistory = async (req: Request, res: Response) => {
   const key = req.query.key as string;
 
-  if (!key) {
-    return res.status(400).json({ error: "Missing 'key' query parameter" });
-  }
-
   try {
     const params = {
       Bucket: bucketName,
