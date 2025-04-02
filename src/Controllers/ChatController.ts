@@ -78,10 +78,6 @@ export const getChatHistory = async (req: Request, res: Response) => {
 export const postOngoingAgent = async (req: Request, res: Response) => {
     const { key, content= '' } = req.body;
 
-    if (!key) {
-    return res.status(400).json({ error: "Missing 'key' or 'content' in request body" });
-    }
-
     const chatHistory: ChatMessage[] = [];
     const historyResponse: ChatMessage[] = await getChatHistoryHandler(key, res);
 
